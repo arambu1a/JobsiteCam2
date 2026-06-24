@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, Pressable,
   Image, Alert, TextInput, Modal, Switch,
   ScrollView, KeyboardAvoidingView, Platform, FlatList,
   Animated, PanResponder, Dimensions,
@@ -65,14 +65,13 @@ async function ensurePhotoDir(pm) {
 async function buildComposite(photo, values, template) {
   const data = await Skia.Data.fromURI(photo.uri);
   if (!data) throw new Error('Could not load photo data.');
-  const img  = Skia.Image.MakeImageFromEncoded(data);
+  const img = Skia.Image.MakeImageFromEncoded(data);
   if (!img) throw new Error('Could not decode photo.');
 
   const imgW = img.width();
   const imgH = img.height();
   const screenW = Dimensions.get('window').width;
-  const scale   = imgW / screenW;
-  console.log('[buildComposite] photo:', photo.width, 'x', photo.height, '| skia img:', imgW, 'x', imgH);
+  const scale = imgW / screenW;
 
   const surface = Skia.Surface.Make(imgW, imgH);
   if (!surface) throw new Error('Could not create render surface.');
@@ -102,34 +101,52 @@ async function buildComposite(photo, values, template) {
   bgPaint.setColor(Skia.Color('rgba(0,0,0,0.62)'));
   canvas.drawRect({ x: 0, y: overlayY, width: imgW, height: overlayH }, bgPaint);
 
-  const typeface  = Skia.FontMgr.System().matchFamilyStyle('', FontStyle.Normal);
-  const font      = Skia.Font(typeface, fontSize);
+  // Prefer an explicit font family known to exist on iOS/Android.
+  // matchFamilyStyle with '' may return a typeface whose glyphs do not render
+  // correctly via the legacy drawSimpleText path.
+  const fm = Skia.FontMgr.System();
+  const typeface =
+    fm.matchFamilyStyle('Helvetica Neue', FontStyle.Normal) ??
+    fm.matchFamilyStyle('Helvetica',      FontStyle.Normal) ??
+    fm.matchFamilyStyle('Arial',          FontStyle.Normal) ??
+    fm.matchFamilyStyle('Roboto',         FontStyle.Normal) ??
+    fm.matchFamilyStyle('',              FontStyle.Normal);
+  if (!typeface) throw new Error('No system font available for overlay.');
+  const font = Skia.Font(typeface, fontSize);
+
   const textPaint = Skia.Paint();
   textPaint.setColor(Skia.Color('white'));
 
+  // Use TextBlob API — more reliable than canvas.drawText (which calls the
+  // deprecated SkCanvas::drawSimpleText and can silently produce no output).
   if (hasTop) {
     const parts = topFields.map(f =>
       f.label ? `${f.label} ${values[f.key] || f.placeholder}` : (values[f.key] || f.placeholder)
     );
-    const text = parts.join('  ·  ');
+    const text = parts.join('  |  ');
+    const blob = Skia.TextBlob.MakeFromText(text, font);
     const tw   = font.measureText(text).width;
-    canvas.drawText(text, (imgW - tw) / 2, overlayY + padTop + fontSize, textPaint, font);
+    canvas.drawTextBlob(blob, (imgW - tw) / 2, overlayY + padTop + fontSize, textPaint);
   }
 
   if (showAddr) {
     const text = values.location || '';
-    const lw   = font.measureText(text).width;
-    let   ly   = overlayY + padTop + fontSize;
-    if (hasTop) ly += lineH + rowGap;
-    canvas.drawText(text, (imgW - lw) / 2, ly, textPaint, font);
+    if (text) {
+      const blob = Skia.TextBlob.MakeFromText(text, font);
+      const lw   = font.measureText(text).width;
+      let   ly   = overlayY + padTop + fontSize;
+      if (hasTop) ly += lineH + rowGap;
+      canvas.drawTextBlob(blob, (imgW - lw) / 2, ly, textPaint);
+    }
   }
 
+  surface.flush();
   const snapshot = surface.makeImageSnapshot();
   if (!snapshot) throw new Error('Could not capture surface snapshot.');
-  console.log('[buildComposite] photo:', photo.width, 'x', photo.height, '| skia img:', imgW, 'x', imgH);
-  const outB64   = snapshot.encodeToBase64(ImageFormat.JPEG, 95);
+
+  const outB64  = snapshot.encodeToBase64(ImageFormat.JPEG, 95);
   if (!outB64) throw new Error('Could not encode image.');
-  const destUri  = FileSystem.cacheDirectory + 'composite_' + Date.now() + '.jpg';
+  const destUri = FileSystem.cacheDirectory + 'composite_' + Date.now() + '.jpg';
   await FileSystem.writeAsStringAsync(destUri, outB64, { encoding: FileSystem.EncodingType.Base64 });
   return destUri;
 }
@@ -539,6 +556,12 @@ export default function App() {
 
   const cameraRef = useRef(null);
 
+  const [focusPt, setFocusPt]           = useState(null);
+  const [autoFocusMode, setAutoFocusMode] = useState('off');
+  const focusRingOpacity = useRef(new Animated.Value(0)).current;
+  const focusRingScale   = useRef(new Animated.Value(1)).current;
+  const focusTimer       = useRef(null);
+
   useEffect(() => { readGroups().then(setGroups); }, []);
 
   useEffect(() => {
@@ -563,6 +586,25 @@ export default function App() {
 
   function updateValue(key, val)  { setValues(v => ({ ...v, [key]: val })); }
   function toggleTemplate(key)    { setTemplate(t => ({ ...t, [key]: !t[key] })); }
+
+  function handleCameraTap(e) {
+    const { pageX, pageY } = e.nativeEvent;
+    if (focusTimer.current) clearTimeout(focusTimer.current);
+    setFocusPt({ x: pageX, y: pageY });
+    setAutoFocusMode('on');
+    focusTimer.current = setTimeout(() => setAutoFocusMode('off'), 800);
+    focusRingOpacity.stopAnimation();
+    focusRingScale.stopAnimation();
+    focusRingOpacity.setValue(1);
+    focusRingScale.setValue(1.3);
+    Animated.parallel([
+      Animated.timing(focusRingScale, { toValue: 1, duration: 200, useNativeDriver: true }),
+      Animated.sequence([
+        Animated.delay(700),
+        Animated.timing(focusRingOpacity, { toValue: 0, duration: 400, useNativeDriver: true }),
+      ]),
+    ]).start(({ finished }) => { if (finished) setFocusPt(null); });
+  }
 
   if (!permission) return <View style={styles.outer} />;
 
@@ -608,7 +650,7 @@ export default function App() {
     try {
       const uri  = await buildComposite(photo, values, template);
       const dir  = await ensurePhotoDir(pm);
-      const dest = dir + Date.now() + '.png';
+      const dest = dir + Date.now() + '.jpg';
       await FileSystem.copyAsync({ from: uri, to: dest });
 
       const entry   = { uri: dest, date: values.date, location: values.location, pm, savedAt: Date.now() };
@@ -680,7 +722,7 @@ export default function App() {
   return (
     <View style={styles.outer}>
       <View style={styles.camera}>
-        <CameraView ref={cameraRef} style={StyleSheet.absoluteFill} facing={facing} pictureSize="Photo" enableTorch={false} zoom={0}/>
+        <CameraView ref={cameraRef} style={StyleSheet.absoluteFill} facing={facing} pictureSize="Photo" enableTorch={false} zoom={0} autofocus={autoFocusMode} />
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -698,7 +740,7 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ flex: 1 }} />
+          <Pressable style={{ flex: 1 }} onPress={handleCameraTap} />
 
           <View style={styles.controls}>
             <TouchableOpacity style={styles.sideBtn} onPress={() => setFacing(f => f === 'back' ? 'front' : 'back')}>
@@ -712,6 +754,24 @@ export default function App() {
 
           <TimestampBar dim={true} {...tsProps} />
         </KeyboardAvoidingView>
+
+        {focusPt && (
+          <Animated.View
+            pointerEvents="none"
+            style={{
+              position: 'absolute',
+              top: focusPt.y - 35,
+              left: focusPt.x - 35,
+              width: 70,
+              height: 70,
+              borderRadius: 35,
+              borderWidth: 1.5,
+              borderColor: 'rgba(220,220,220,0.9)',
+              opacity: focusRingOpacity,
+              transform: [{ scale: focusRingScale }],
+            }}
+          />
+        )}
       </View>
 
       <SettingsModal visible={settingsVisible} template={template} onToggle={toggleTemplate} onClose={() => setSettingsVisible(false)} />
