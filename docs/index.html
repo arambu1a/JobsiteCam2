@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldStamp</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #5c5c5c;
+    --rule: #e4e4e4; --accent: #1d4ed8; --card: #f7f7f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14151a; --fg: #e8e8ea; --muted: #a0a0a8;
+      --rule: #2c2d34; --accent: #7aa2f7; --card: #1c1d24;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 4rem 1.25rem 5rem;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 36rem; margin: 0 auto; }
+  h1 { font-size: 2.1rem; margin: 0 0 .5rem; letter-spacing: -.025em; }
+  .tagline { color: var(--muted); font-size: 1.1rem; margin: 0 0 2.5rem; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { border-top: 1px solid var(--rule); }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+  li a {
+    display: block; padding: 1.1rem .25rem;
+    color: var(--accent); text-decoration: none; font-weight: 550;
+  }
+  li a:hover { text-decoration: underline; }
+  li span { display: block; color: var(--muted); font-weight: 400; font-size: .92rem; margin-top: .15rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>FieldStamp</h1>
+  <p class="tagline">Jobsite photos, stamped with the details that matter.</p>
+  <ul>
+    <li><a href="./support.html">Support<span>How the app works, and how to get help</span></a></li>
+    <li><a href="./privacy.html">Privacy Policy<span>FieldStamp collects no data</span></a></li>
+  </ul>
+</main>
+</body>
+</html>
