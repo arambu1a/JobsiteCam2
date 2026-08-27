@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "JobsiteCam2",
+    "name": "FieldStamp",
     "slug": "JobsiteCam2",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.anonymous.JobsiteCam2"
+      "bundleIdentifier": "com.jorgearambula.jobsitecam",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,13 +25,36 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.JobsiteCam2"
+      "package": "com.jorgearambula.jobsitecam"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "FieldStamp uses the camera to take jobsite photos.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "FieldStamp adds your current address to the photo's timestamp overlay.",
+          "locationAlwaysAndWhenInUsePermission": false,
+          "locationAlwaysPermission": false
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "savePhotosPermission": "FieldStamp saves stamped photos to your camera roll.",
+          "photosPermission": false,
+          "isAccessMediaLocationEnabled": false
+        }
+      ]
     ]
   }
 }

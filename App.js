@@ -541,7 +541,7 @@ function FoldersModal({ visible, groups, onSelectPm, onClose }) {
 
 export default function App() {
   const [permission, requestPermission]           = useCameraPermissions();
-  const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
+  const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions({ writeOnly: true });
   const [photo, setPhoto]           = useState(null);
   const [facing, setFacing]         = useState('back');
   const [settingsVisible, setSettingsVisible] = useState(false);

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "JobsiteCam2.app"
-               BlueprintName = "JobsiteCam2"
-               ReferencedContainer = "container:JobsiteCam2.xcodeproj">
+               BuildableName = "FieldStamp.app"
+               BlueprintName = "FieldStamp"
+               ReferencedContainer = "container:FieldStamp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "JobsiteCam2Tests.xctest"
-               BlueprintName = "JobsiteCam2Tests"
-               ReferencedContainer = "container:JobsiteCam2.xcodeproj">
+               BuildableName = "FieldStampTests.xctest"
+               BlueprintName = "FieldStampTests"
+               ReferencedContainer = "container:FieldStamp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "JobsiteCam2.app"
-            BlueprintName = "JobsiteCam2"
-            ReferencedContainer = "container:JobsiteCam2.xcodeproj">
+            BuildableName = "FieldStamp.app"
+            BlueprintName = "FieldStamp"
+            ReferencedContainer = "container:FieldStamp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "JobsiteCam2.app"
-            BlueprintName = "JobsiteCam2"
-            ReferencedContainer = "container:JobsiteCam2.xcodeproj">
+            BuildableName = "FieldStamp.app"
+            BlueprintName = "FieldStamp"
+            ReferencedContainer = "container:FieldStamp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
