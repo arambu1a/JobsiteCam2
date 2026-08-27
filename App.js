@@ -13,7 +13,6 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import { Skia, ImageFormat, FontStyle } from '@shopify/react-native-skia';
 import { Ionicons } from '@expo/vector-icons';
-import { DEMO, DEMO_SCENES, DEMO_VALUES, DEMO_TEMPLATE, loadDemoScenes, demoGroups } from './demo';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -549,16 +548,13 @@ export default function App() {
   const [selectedPm, setSelectedPm]           = useState(null);
   const [groups, setGroups]         = useState({});
 
-  const [demoIndex, setDemoIndex]   = useState(0);   // DEMO: which staged scene is showing
-
-  const [template, setTemplate] = useState(DEMO ? DEMO_TEMPLATE : DEFAULT_TEMPLATE);
-  const [values, setValues]     = useState(() => (DEMO ? { ...DEMO_VALUES } : {
+  const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
+  const [values, setValues]     = useState(() => ({
     date: todayString(), location: 'Locating…',
     pm: '', notification: '', foreman: '', photoType: '',
   }));
 
   const cameraRef  = useRef(null);
-  const demoScenes = useRef([]);
 
   const [focusPt, setFocusPt]           = useState(null);
   const [autoFocusMode, setAutoFocusMode] = useState('off');
@@ -567,15 +563,10 @@ export default function App() {
   const focusTimer       = useRef(null);
 
   useEffect(() => {
-    if (DEMO) {
-      loadDemoScenes().then(scenes => { demoScenes.current = scenes; setGroups(demoGroups(scenes)); });
-      return;
-    }
     readGroups().then(setGroups);
   }, []);
 
   useEffect(() => {
-    if (DEMO) return;   // canned address from DEMO_VALUES; no permission prompt
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') { setValues(v => ({ ...v, location: 'No location' })); return; }
@@ -617,9 +608,9 @@ export default function App() {
     ]).start(({ finished }) => { if (finished) setFocusPt(null); });
   }
 
-  if (!DEMO && !permission) return <View style={styles.outer} />;
+  if (!permission) return <View style={styles.outer} />;
 
-  if (!DEMO && !permission.granted) {
+  if (!permission.granted) {
     return (
       <View style={styles.centered}>
         <Text style={styles.permText}>Camera access is required to take jobsite photos.</Text>
@@ -631,7 +622,6 @@ export default function App() {
   }
 
   async function takePicture() {
-    if (DEMO) { setPhoto(demoScenes.current[demoIndex] ?? null); return; }
     if (!cameraRef.current) return;
     const result = await cameraRef.current.takePictureAsync({ quality: 1 });
     console.log('[takePicture]', result.width, 'x', result.height);
@@ -734,11 +724,7 @@ export default function App() {
   return (
     <View style={styles.outer}>
       <View style={styles.camera}>
-        {DEMO ? (
-          <Image source={DEMO_SCENES[demoIndex]} style={styles.demoScene} />
-        ) : (
-          <CameraView ref={cameraRef} style={StyleSheet.absoluteFill} facing={facing} pictureSize="Photo" enableTorch={false} zoom={0} autofocus={autoFocusMode} />
-        )}
+        <CameraView ref={cameraRef} style={StyleSheet.absoluteFill} facing={facing} pictureSize="Photo" enableTorch={false} zoom={0} autofocus={autoFocusMode} />
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -761,11 +747,9 @@ export default function App() {
           <View style={styles.controls}>
             <TouchableOpacity
               style={styles.sideBtn}
-              onPress={() => DEMO
-                ? setDemoIndex(i => (i + 1) % DEMO_SCENES.length)   // cycle staged scenes
-                : setFacing(f => f === 'back' ? 'front' : 'back')}
+              onPress={() => setFacing(f => f === 'back' ? 'front' : 'back')}
             >
-              <Ionicons name={DEMO ? 'images-outline' : 'camera-reverse-outline'} size={28} color="#fff" />
+              <Ionicons name="camera-reverse-outline" size={28} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.shutter} onPress={takePicture} />
             <TouchableOpacity style={styles.sideBtn} onPress={() => setSettingsVisible(true)}>
@@ -773,9 +757,7 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
-          {/* DEMO: full-strength overlay so it reads clearly in screenshots —
-              this is how it looks burned into the saved photo anyway. */}
-          <TimestampBar dim={!DEMO} {...tsProps} />
+          <TimestampBar dim {...tsProps} />
         </KeyboardAvoidingView>
 
         {focusPt && (
@@ -810,8 +792,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   outer:    { flex: 1, backgroundColor: '#000' },
-  // DEMO: stands in for the camera preview; matches styles.previewImg
-  demoScene: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', resizeMode: 'cover' },
   centered: { flex: 1, backgroundColor: '#000', alignItems: 'center', justifyContent: 'center' },
   camera:   { flex: 1 },
 
