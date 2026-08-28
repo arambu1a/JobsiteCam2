@@ -4,122 +4,237 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — FieldStamp</title>
+<meta name="description" content="FieldStamp collects no data. Everything the app does happens on your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #ffffff; --fg: #1a1a1a; --muted: #5c5c5c;
-    --rule: #e4e4e4; --accent: #1d4ed8; --card: #f7f7f8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14151a; --fg: #e8e8ea; --muted: #a0a0a8;
-      --rule: #2c2d34; --accent: #7aa2f7; --card: #1c1d24;
-    }
+    --color-bg: #0d0d10;
+    --color-text: #f4f3f7;
+    --color-neutral-300: #cbc9d4;
+    --color-neutral-400: #9d9baa;
+    --color-neutral-500: #76747f;
+    --color-neutral-800: #26252d;
+    --color-neutral-900: #16161b;
+    --color-accent: #9184d9;
+    --color-accent-200: #cfc9f2;
+    --color-accent-300: #ab9fe6;
+    --radius-md: 12px;
+    --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; padding: 3rem 1.25rem 5rem;
-    background: var(--bg); color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-text-size-adjust: 100%;
+    margin: 0; background: var(--color-bg); color: var(--color-text);
+    font-family: var(--font-body); -webkit-text-size-adjust: 100%;
   }
-  main { max-width: 42rem; margin: 0 auto; }
-  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
-  h2 {
-    font-size: 1.1rem; margin: 2.4rem 0 .6rem; letter-spacing: -.01em;
-    padding-top: 1.4rem; border-top: 1px solid var(--rule);
+  a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid rgba(145,132,217,.35); }
+  a:hover { color: var(--color-accent-200); }
+
+  .page { min-height: 100vh; padding: 0 32px 120px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 28px 0; border-bottom: 1px solid var(--color-neutral-800);
   }
-  .date { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
-  p, li { color: var(--fg); }
-  ul { padding-left: 1.15rem; }
-  li { margin: .4rem 0; }
-  a { color: var(--accent); }
-  .lede {
-    background: var(--card); border-radius: 10px;
-    padding: 1.1rem 1.25rem; margin: 0 0 1rem;
-    font-size: 1.02rem;
+  .brand { display: flex; align-items: center; gap: 12px; font: 500 17px/1 var(--font-heading); letter-spacing: -.01em; }
+  .brand .bar { width: 26px; height: 3px; background: var(--color-accent); }
+  .brand a { color: var(--color-text); border-bottom-color: transparent; }
+  .site-nav { display: flex; gap: 22px; font-size: 14px; }
+  .site-nav a { color: var(--color-neutral-400); border-bottom-color: transparent; }
+  .site-nav a:hover, .site-nav a.is-active { color: var(--color-text); }
+
+  main { padding-top: 64px; }
+  h1 { margin: 0; font: 500 40px/1.14 var(--font-heading); letter-spacing: -.02em; }
+  .meta { margin: 16px 0 0; font: 400 14px/1.5 var(--font-body); color: var(--color-neutral-500); }
+
+  .lede { margin-top: 40px; display: flex; flex-direction: column; gap: 18px;
+          font: 400 17px/1.68 var(--font-body); color: var(--color-neutral-300); }
+  .lede p { margin: 0; text-wrap: pretty; }
+
+  .toc {
+    margin-top: 52px; padding: 28px 30px; background: var(--color-neutral-900);
+    border: 1px solid var(--color-neutral-800); border-radius: var(--radius-md);
   }
-  .lede strong { font-weight: 650; }
-  footer {
-    margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
-    color: var(--muted); font-size: .88rem;
+  .toc-title {
+    margin: 0 0 18px; font: 500 12px/1 var(--font-body); letter-spacing: .18em;
+    text-transform: uppercase; color: var(--color-neutral-400);
   }
-  footer a { color: var(--muted); }
+  .toc ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; font: 400 16px/1.4 var(--font-body); }
+  .toc li { display: flex; gap: 12px; }
+  .toc .num { color: var(--color-neutral-500); min-width: 24px; }
+  .toc a { border-bottom-color: transparent; }
+  .toc a:hover { border-bottom-color: rgba(145,132,217,.35); }
+
+  .doc {
+    margin-top: 52px; padding-top: 34px;
+    border-top: 1px solid var(--color-neutral-800); scroll-margin-top: 24px;
+  }
+  .doc:first-of-type { margin-top: 64px; }
+  .doc.last { border-bottom: 1px solid var(--color-neutral-800); padding-bottom: 34px; }
+  .doc h2 { margin: 0 0 16px; font: 500 24px/1.28 var(--font-heading); letter-spacing: -.01em; }
+  .prose { display: flex; flex-direction: column; gap: 16px; font: 400 16px/1.72 var(--font-body); color: var(--color-neutral-400); }
+  .prose p { margin: 0; text-wrap: pretty; }
+  .prose ul { margin: 0; padding-left: 22px; display: grid; gap: 9px; }
+
+  footer { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-neutral-500); }
+
+  @media (max-width: 760px) {
+    .page { padding: 0 20px 80px; }
+    main { padding-top: 44px; }
+    h1 { font-size: 30px; }
+    .lede { font-size: 16px; margin-top: 32px; }
+    .toc { padding: 22px 20px; margin-top: 40px; }
+    .doc, .doc:first-of-type { margin-top: 40px; padding-top: 28px; }
+    .doc h2 { font-size: 21px; }
+  }
 </style>
 </head>
 <body>
-<main>
+<div class="page">
+
+<header class="site-head wrap">
+  <span class="brand"><span class="bar"></span><a href="./">FieldStamp</a></span>
+  <nav class="site-nav">
+    <a href="./support.html">Support</a>
+    <a href="./privacy.html" class="is-active">Privacy</a>
+  </nav>
+</header>
+
+<main class="wrap">
 
   <h1>FieldStamp Privacy Policy</h1>
-  <p class="date">Effective August 26, 2026</p>
+  <p class="meta">Effective August 27, 2026. Last updated August 27, 2026.</p>
 
-  <p class="lede">
-    <strong>FieldStamp does not collect any of your data.</strong> The app has no
-    servers, no user accounts, no analytics, no advertising, and no third-party
-    tracking. Everything it does happens on your iPhone.
-  </p>
+  <div class="lede">
+    <p>FieldStamp is a jobsite camera. It takes a photo, stamps the date, time, project details and street address onto the image, and files it on your phone. That is the entire product.</p>
+    <p>This policy explains what the app does with information on your device and what it sends elsewhere, which is nothing. There is no account to create, no server holding your work, and no data collected about you. We have written it out in full below anyway, because you should be able to check rather than take our word for it.</p>
+    <p>If you have a question this policy does not answer, write to <a href="mailto:support@fieldstamp.app">support@fieldstamp.app</a>.</p>
+  </div>
 
-  <h2>What the app accesses, and why</h2>
+  <nav class="toc" aria-label="Contents">
+    <p class="toc-title">Contents</p>
+    <ol>
+      <li><span class="num">1.</span><a href="#s1">What information we collect</a></li>
+      <li><span class="num">2.</span><a href="#s2">How the camera is used</a></li>
+      <li><span class="num">3.</span><a href="#s3">How location is used</a></li>
+      <li><span class="num">4.</span><a href="#s4">How the photo library is used</a></li>
+      <li><span class="num">5.</span><a href="#s5">Where your photos are stored</a></li>
+      <li><span class="num">6.</span><a href="#s6">How information is shared</a></li>
+      <li><span class="num">7.</span><a href="#s7">Analytics, advertising and tracking</a></li>
+      <li><span class="num">8.</span><a href="#s8">Your controls and rights</a></li>
+      <li><span class="num">9.</span><a href="#s9">Children</a></li>
+      <li><span class="num">10.</span><a href="#s10">Changes to this policy</a></li>
+      <li><span class="num">11.</span><a href="#s11">Contact us</a></li>
+    </ol>
+  </nav>
 
-  <p><strong>Camera.</strong> FieldStamp uses the camera to take jobsite photos.
-  Photos are captured and stamped with the overlay entirely on your device. They
-  are never uploaded anywhere.</p>
+  <section class="doc" id="s1">
+    <h2>1. What information we collect</h2>
+    <div class="prose">
+      <p>None. FieldStamp does not collect, receive or store any information about you or your use of the app. Specifically, we do not collect:</p>
+      <ul>
+        <li>Names, email addresses, phone numbers or company details</li>
+        <li>Accounts, usernames or passwords, because there are none to create</li>
+        <li>Photos you take, or the details stamped onto them</li>
+        <li>Location history, coordinates or addresses</li>
+        <li>Device identifiers, advertising identifiers or IP addresses</li>
+        <li>Usage data, screen views, session length or crash reports</li>
+      </ul>
+      <p>The app asks for three permissions — camera, location while in use, and add-only access to your photo library — and uses each only for the purpose described below.</p>
+    </div>
+  </section>
 
-  <p><strong>Location (while using the app).</strong> If you grant location access,
-  FieldStamp reads your current position once so it can print the street address
-  onto the photo overlay. To turn coordinates into a readable address, the app
-  uses Apple's built-in geocoding service, which means your approximate
-  coordinates are sent to Apple for that lookup. This is handled by iOS under
-  <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>; the
-  developer of FieldStamp neither receives nor stores your location. If you deny
-  location access, the app simply leaves the address line blank and everything
-  else keeps working.</p>
+  <section class="doc" id="s2">
+    <h2>2. How the camera is used</h2>
+    <div class="prose">
+      <p>Camera access is what lets you take the photo. When you tap the shutter, the app writes the image and its stamp to storage on your device and nowhere else. Denying camera access leaves the app unable to take photos, which is its only function.</p>
+    </div>
+  </section>
 
-  <p><strong>Photo library (saving only).</strong> FieldStamp requests add-only
-  access so it can save stamped photos to your camera roll. It cannot read,
-  browse, or view the photos already in your library.</p>
+  <section class="doc" id="s3">
+    <h2>3. How location is used</h2>
+    <div class="prose">
+      <p>While you have the app open, it reads your device location so it can print the street address on the stamp. Turning coordinates into a readable address is done by Apple's built-in geocoding service, which means your approximate coordinates are sent to Apple for that lookup. That step is handled by iOS under <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>. The developer of FieldStamp neither receives nor stores your location: the address comes back, is written onto the photo, and the coordinates are discarded. They are not kept in a separate log and not tied to an identity.</p>
+      <p>Location is never read in the background or when the app is closed. You can revoke location access at any time in your device settings; every other part of the app keeps working and photos are stamped without an address.</p>
+    </div>
+  </section>
 
-  <h2>What is stored on your device</h2>
+  <section class="doc" id="s4">
+    <h2>4. How the photo library is used</h2>
+    <div class="prose">
+      <p>FieldStamp asks for add-only access to your photo library so that Save to Roll can write a stamped photo to your camera roll. Add-only means exactly that: the app can put a photo in, and it cannot read, browse or view the photos already in your library.</p>
+      <p>Denying this permission leaves everything else working — photos still capture, stamp, and file into their project inside the app.</p>
+    </div>
+  </section>
 
-  <p>Photos you save to a PM group, along with their PM number, date, and address,
-  are written to FieldStamp's private storage area on your iPhone. This data is
-  visible only to the app. Deleting FieldStamp removes all of it permanently.</p>
+  <section class="doc" id="s5">
+    <h2>5. Where your photos are stored</h2>
+    <div class="prose">
+      <p>Photos, project numbers, foreman names, photo types and addresses are stored on your device, inside the app. There is no FieldStamp server holding a copy, no cloud backup run by us, and no way for us to retrieve your work.</p>
+      <p>Because your photos live on the device, deleting the app deletes them. Export anything you need to keep before uninstalling.</p>
+    </div>
+  </section>
 
-  <h2>Sharing</h2>
+  <section class="doc" id="s6">
+    <h2>6. How information is shared</h2>
+    <div class="prose">
+      <p>We do not sell, rent, trade or disclose your information, because we do not hold any. Sharing happens only when you do it yourself:</p>
+      <ul>
+        <li>Saving a photo to your camera roll puts a copy in your device's photo library</li>
+        <li>Sharing or exporting a photo or project sends a copy wherever you send it</li>
+      </ul>
+      <p>Once a copy leaves the app, it is handled by whatever service or app you sent it to, under that service's own terms and privacy policy.</p>
+    </div>
+  </section>
 
-  <p>When you tap Share, FieldStamp hands the photo to the standard iOS share
-  sheet. Where it goes from there — Messages, Mail, Files, or any other app — is
-  entirely your choice, and is governed by whichever app you pick.</p>
+  <section class="doc" id="s7">
+    <h2>7. Analytics, advertising and tracking</h2>
+    <div class="prose">
+      <p>FieldStamp contains no analytics tools, no advertising networks and no third-party tracking software. Nothing profiles you, targets you or follows you across apps. There is no cross-app tracking to opt out of because there is none to begin with.</p>
+    </div>
+  </section>
 
-  <h2>What FieldStamp does not do</h2>
+  <section class="doc" id="s8">
+    <h2>8. Your controls and rights</h2>
+    <div class="prose">
+      <p>Privacy laws in some places give you the right to access, correct, port or delete the personal information a company holds about you. We hold none, so there is nothing for us to produce or erase — and no request is needed to exercise control over your own data:</p>
+      <ul>
+        <li>Camera, location and photo permissions can be changed or revoked in your device settings at any time</li>
+        <li>Individual photos and whole projects can be deleted inside the app</li>
+        <li>Deleting the app removes everything it stored on your device</li>
+      </ul>
+    </div>
+  </section>
 
-  <ul>
-    <li>No data is transmitted to the developer or to any third party</li>
-    <li>No accounts, logins, or personal details are requested</li>
-    <li>No analytics, crash reporting, or usage tracking</li>
-    <li>No advertising and no advertising identifiers</li>
-    <li>No tracking across other apps or websites</li>
-    <li>No data is sold or shared with anyone</li>
-  </ul>
+  <section class="doc" id="s9">
+    <h2>9. Children</h2>
+    <div class="prose">
+      <p>FieldStamp is a work tool for jobsites and is not directed at children. Since the app collects no information from anyone, it collects none from children.</p>
+    </div>
+  </section>
 
-  <h2>Children</h2>
+  <section class="doc" id="s10">
+    <h2>10. Changes to this policy</h2>
+    <div class="prose">
+      <p>If the app ever begins handling information differently, we will update this policy, change the effective date above and note the change in the app before the new version takes effect.</p>
+    </div>
+  </section>
 
-  <p>FieldStamp is a work tool intended for general audiences. It collects no data
-  from anyone, including children under 13.</p>
-
-  <h2>Changes to this policy</h2>
-
-  <p>If this policy changes, the revised version will be posted on this page with
-  an updated effective date.</p>
-
-  <h2>Contact</h2>
-
-  <p>Questions about this policy or about FieldStamp:
-  <a href="mailto:arambulaqqq@gmail.com">arambulaqqq@gmail.com</a></p>
+  <section class="doc last" id="s11">
+    <h2>11. Contact us</h2>
+    <div class="prose">
+      <p>Questions about this policy or about how the app works go to <a href="mailto:support@fieldstamp.app">support@fieldstamp.app</a>. Answers to common questions are on the <a href="./support.html">support page</a>.</p>
+    </div>
+  </section>
 
   <footer>
-    FieldStamp · <a href="./support.html">Support</a>
+    <span>FieldStamp</span><a href="./support.html">Support</a><a href="mailto:support@fieldstamp.app">support@fieldstamp.app</a>
   </footer>
 
 </main>
+</div>
 </body>
 </html>

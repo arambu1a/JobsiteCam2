@@ -4,132 +4,225 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Support — FieldStamp</title>
+<meta name="description" content="Help with FieldStamp: stamping, addresses, and project folders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #ffffff; --fg: #1a1a1a; --muted: #5c5c5c;
-    --rule: #e4e4e4; --accent: #1d4ed8; --card: #f7f7f8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14151a; --fg: #e8e8ea; --muted: #a0a0a8;
-      --rule: #2c2d34; --accent: #7aa2f7; --card: #1c1d24;
-    }
+    --color-bg: #0d0d10;
+    --color-text: #f4f3f7;
+    --color-neutral-300: #cbc9d4;
+    --color-neutral-400: #9d9baa;
+    --color-neutral-500: #76747f;
+    --color-neutral-800: #26252d;
+    --color-neutral-900: #16161b;
+    --color-accent: #9184d9;
+    --color-accent-200: #cfc9f2;
+    --color-accent-300: #ab9fe6;
+    --radius-md: 12px;
+    --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; padding: 3rem 1.25rem 5rem;
-    background: var(--bg); color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-text-size-adjust: 100%;
+    margin: 0; background: var(--color-bg); color: var(--color-text);
+    font-family: var(--font-body); -webkit-text-size-adjust: 100%;
   }
-  main { max-width: 42rem; margin: 0 auto; }
-  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.02em; }
-  .tagline { color: var(--muted); margin: 0 0 2rem; }
-  h2 {
-    font-size: 1.1rem; margin: 2.4rem 0 .6rem; letter-spacing: -.01em;
-    padding-top: 1.4rem; border-top: 1px solid var(--rule);
+  a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid rgba(145,132,217,.35); }
+  a:hover { color: var(--color-accent-200); }
+
+  .page { min-height: 100vh; padding: 0 32px 120px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 28px 0; border-bottom: 1px solid var(--color-neutral-800);
   }
-  h3 { font-size: 1rem; margin: 1.5rem 0 .35rem; }
-  ul { padding-left: 1.15rem; }
-  li { margin: .4rem 0; }
-  a { color: var(--accent); }
+  .brand { display: flex; align-items: center; gap: 12px; font: 500 17px/1 var(--font-heading); letter-spacing: -.01em; }
+  .brand .bar { width: 26px; height: 3px; background: var(--color-accent); }
+  .brand a { color: var(--color-text); border-bottom-color: transparent; }
+  .site-nav { display: flex; gap: 22px; font-size: 14px; }
+  .site-nav a { color: var(--color-neutral-400); border-bottom-color: transparent; }
+  .site-nav a:hover, .site-nav a.is-active { color: var(--color-text); }
+
+  main { padding-top: 72px; }
+  .kicker {
+    margin: 0 0 18px; font: 500 13px/1 var(--font-body); letter-spacing: .18em;
+    text-transform: uppercase; color: var(--color-accent-300);
+  }
+  h1 { margin: 0; font: 500 44px/1.12 var(--font-heading); letter-spacing: -.02em; max-width: 560px; text-wrap: balance; }
+  .intro { margin: 20px 0 0; max-width: 600px; font: 400 17px/1.62 var(--font-body); color: var(--color-neutral-400); text-wrap: pretty; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 22px; border-radius: 999px; border: 1px solid transparent;
+    font: 500 15px/1 var(--font-body); border-bottom-style: solid;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: #14121f; }
+  .btn-primary:hover { background: var(--color-accent-300); border-color: var(--color-accent-300); color: #14121f; }
+  .btn-ghost { background: transparent; border-color: var(--color-neutral-800); color: var(--color-text); }
+  .btn-ghost:hover { border-color: var(--color-neutral-500); color: var(--color-text); }
+
+  .cards { margin-top: 76px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .card {
-    background: var(--card); border-radius: 10px;
-    padding: 1.1rem 1.25rem; margin: 1rem 0;
+    background: var(--color-neutral-900); border: 1px solid var(--color-neutral-800);
+    border-radius: var(--radius-md); padding: 22px;
   }
-  .contact { font-size: 1.05rem; }
-  footer {
-    margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--rule);
-    color: var(--muted); font-size: .88rem;
+  .card-kicker {
+    font: 500 11px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--color-accent-300); margin-bottom: 14px;
   }
-  footer a { color: var(--muted); }
+  .card-title { font: 500 16px/1.3 var(--font-heading); color: var(--color-text); letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .card-body { margin-top: 8px; font: 400 14px/1.6 var(--font-body); color: var(--color-neutral-400); }
+
+  .section { margin-top: 96px; }
+  .section-label {
+    margin: 0 0 8px; font: 500 15px/1 var(--font-body); letter-spacing: .14em;
+    text-transform: uppercase; color: var(--color-neutral-400);
+  }
+  .row {
+    border-top: 1px solid var(--color-neutral-800); padding: 28px 0;
+    display: grid; grid-template-columns: 220px 1fr; gap: 32px;
+  }
+  .row:last-child { border-bottom: 1px solid var(--color-neutral-800); }
+  .row h3 { margin: 0; font: 500 18px/1.35 var(--font-heading); color: var(--color-text); }
+  .row p { margin: 0; font: 400 16px/1.66 var(--font-body); color: var(--color-neutral-400); text-wrap: pretty; }
+  .row p + p, .row ul + p { margin-top: 12px; }
+  .row ul { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 8px; font: 400 16px/1.6 var(--font-body); color: var(--color-neutral-400); }
+  .row strong { color: var(--color-neutral-300); font-weight: 500; }
+
+  footer { margin-top: 64px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-neutral-500); }
+
+  @media (max-width: 760px) {
+    .page { padding: 0 20px 80px; }
+    main { padding-top: 48px; }
+    h1 { font-size: 32px; }
+    .intro { font-size: 16px; }
+    .cards { margin-top: 48px; grid-template-columns: 1fr; }
+    .section { margin-top: 64px; }
+    .row { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+  }
 </style>
 </head>
 <body>
-<main>
+<div class="page">
 
-  <h1>FieldStamp Support</h1>
-  <p class="tagline">Jobsite photos, stamped with the details that matter.</p>
+<header class="site-head wrap">
+  <span class="brand"><span class="bar"></span><a href="./">FieldStamp</a></span>
+  <nav class="site-nav">
+    <a href="./support.html" class="is-active">Support</a>
+    <a href="./privacy.html">Privacy</a>
+  </nav>
+</header>
 
-  <div class="card contact">
-    Need help? Email <a href="mailto:arambulaqqq@gmail.com">arambulaqqq@gmail.com</a>
-    and you'll get a reply within a couple of business days.
+<main class="wrap">
+  <p class="kicker">Support</p>
+  <h1>Help with FieldStamp</h1>
+  <p class="intro">Questions about stamping, addresses, or PM folders. Most answers are below; if yours isn't, email us and we'll reply within one business day.</p>
+
+  <div class="actions">
+    <a href="mailto:support@fieldstamp.app" class="btn btn-primary">Email support</a>
+    <a href="#faq" class="btn btn-ghost">Read the FAQ</a>
   </div>
 
-  <h2>What FieldStamp does</h2>
+  <section class="cards">
+    <div class="card">
+      <div class="card-kicker">Email</div>
+      <div class="card-title">support@fieldstamp.app</div>
+      <div class="card-body">Replies within one business day, Monday to Friday.</div>
+    </div>
+    <div class="card">
+      <div class="card-kicker">App version</div>
+      <div class="card-title">Settings → About</div>
+      <div class="card-body">Include this number so we can match your build.</div>
+    </div>
+    <div class="card">
+      <div class="card-kicker">Device</div>
+      <div class="card-title">iOS 15.1 or later</div>
+      <div class="card-body">iPhone. Camera and location permissions required.</div>
+    </div>
+  </section>
 
-  <p>FieldStamp burns a timestamp overlay directly into your jobsite photos, so
-  the date, address, and project details are part of the image itself rather than
-  metadata that gets stripped when the photo is emailed or texted.</p>
+  <section class="section">
+    <h2 class="section-label">How it works</h2>
 
-  <p>The overlay can include:</p>
-  <ul>
-    <li><strong>Date</strong> — filled in automatically</li>
-    <li><strong>Location</strong> — your current street address, resolved automatically</li>
-    <li><strong>PM #</strong> — the project or work-order number</li>
-    <li><strong>Notification #</strong></li>
-    <li><strong>Foreman</strong></li>
-    <li><strong>Photo type</strong> — Progress, Before, After, and so on</li>
-  </ul>
+    <div class="row">
+      <h3>What the stamp contains</h3>
+      <div>
+        <p>FieldStamp burns the overlay directly into the image, so the details survive being emailed or texted instead of being stripped with the metadata. The bar can carry:</p>
+        <ul>
+          <li><strong>Date</strong> — filled in automatically</li>
+          <li><strong>Location</strong> — your current street address, resolved automatically</li>
+          <li><strong>PM #</strong> — the project or work-order number</li>
+          <li><strong>Notification #</strong></li>
+          <li><strong>Foreman</strong></li>
+          <li><strong>Photo type</strong> — Progress, Before, After, and so on</li>
+        </ul>
+        <p>Each field switches on or off in Settings, so the bar shows only what your crew actually needs.</p>
+      </div>
+    </div>
 
-  <p>Each field can be switched on or off in Settings, so the bar shows only what
-  your crew actually needs.</p>
+    <div class="row">
+      <h3>Taking a stamped photo</h3>
+      <p>Point and shoot. The overlay preview sits over the viewfinder, so you see exactly what will be burned in. After the shot, any field can still be edited before saving.</p>
+    </div>
 
-  <h2>Using the app</h2>
+    <div class="row">
+      <h3>Saving a photo</h3>
+      <div>
+        <p><strong>Save to Roll</strong> writes the stamped photo to your iPhone's camera roll, ready to share anywhere.</p>
+        <p><strong>Save to PM</strong> files it into a folder for that PM number, kept inside the app. Enter a PM # in the overlay first — the app prompts you if it's blank.</p>
+      </div>
+    </div>
 
-  <h3>Taking a stamped photo</h3>
-  <p>Point and shoot. The overlay preview sits over the viewfinder so you can see
-  exactly what will be burned in. After the shot, you can edit any field before
-  saving.</p>
+    <div class="row">
+      <h3>PM folders</h3>
+      <p>Open the folders view to see every PM number you've photographed, most recent first. Tap into one for the photo grid, where you can select several photos at once to share or delete.</p>
+    </div>
+  </section>
 
-  <h3>Saving</h3>
-  <p><strong>Save to Roll</strong> writes the stamped photo to your iPhone's camera
-  roll, ready to share anywhere.</p>
-  <p><strong>Save to PM</strong> files it into a folder for that PM number, kept
-  inside the app. Enter a PM # in the overlay first — the app will prompt you if
-  it's blank.</p>
+  <section class="section" id="faq">
+    <h2 class="section-label">Common questions</h2>
 
-  <h3>PM folders</h3>
-  <p>Open the folders view to see every PM number you've photographed, with the
-  most recent first. Tap into one for the photo grid, where you can select
-  multiple photos to share or delete at once.</p>
+    <div class="row">
+      <h3>The stamp isn't showing the address</h3>
+      <p>Location access has to be set to "While Using the App" in iOS Settings → Privacy → Location Services → FieldStamp. If access is on and the address still hasn't filled in, the phone hasn't reached a network yet — it resolves once it does.</p>
+    </div>
 
-  <h2>Common questions</h2>
+    <div class="row">
+      <h3>The address is wrong or imprecise</h3>
+      <p>Addresses come from Apple's geocoding service. On large sites or in rural areas the nearest known address can be some distance off. Tap the location field and type the correct address before saving.</p>
+    </div>
 
-  <h3>The address says "Locating…" or "No location"</h3>
-  <p>FieldStamp needs location permission to fill in the address. Go to
-  <strong>Settings › FieldStamp › Location</strong> and choose
-  <em>While Using the App</em>. "No location" means permission was denied; the
-  rest of the app still works normally, just without the address line.</p>
+    <div class="row">
+      <h3>Can I shoot without service?</h3>
+      <p>Yes. Photos capture, stamp and save on the device with no connection. The address is the only part that needs signal, and it fills in once you have it.</p>
+    </div>
 
-  <h3>The address is wrong or imprecise</h3>
-  <p>Addresses come from Apple's geocoding service. On large sites or in rural
-  areas the nearest known address may be some distance off. You can tap the
-  location field and type the correct address before saving.</p>
+    <div class="row">
+      <h3>Photos aren't saving to my camera roll</h3>
+      <p>Check iOS Settings → FieldStamp → Photos and make sure adding photos is allowed. FieldStamp only ever adds photos — it never reads your library.</p>
+    </div>
 
-  <h3>Photos aren't saving to my camera roll</h3>
-  <p>Check <strong>Settings › FieldStamp › Photos</strong> and make sure adding
-  photos is allowed. FieldStamp only ever adds photos — it never reads your
-  library.</p>
+    <div class="row">
+      <h3>How do I change a project number?</h3>
+      <p>Open the project from your PM folders and edit the number there. Photos already filed under it move with the project; stamps burned into existing images don't change.</p>
+    </div>
 
-  <h3>Where do my PM photos live?</h3>
-  <p>Inside the app's own storage on your iPhone. They are not uploaded anywhere.
-  Deleting the app deletes them permanently, so save anything you need to keep to
-  your camera roll or share it out first.</p>
-
-  <h3>Can I get my photos off the phone?</h3>
-  <p>Yes — open a PM folder, select the photos you want, and use Share to send
-  them by email, message, or into Files.</p>
-
-  <h2>Privacy</h2>
-
-  <p>FieldStamp collects no data whatsoever. See the
-  <a href="./privacy.html">privacy policy</a> for the details.</p>
+    <div class="row">
+      <h3>Where are my photos stored?</h3>
+      <p>On your device, inside the app. There is no account and no cloud — nothing is sent to us, ever. Saving to the camera roll or sharing sends a copy where you tell it to. Deleting the app deletes what's inside it, so export anything you need to keep first. See the <a href="./privacy.html">privacy policy</a>.</p>
+    </div>
+  </section>
 
   <footer>
-    FieldStamp · <a href="./privacy.html">Privacy Policy</a>
+    <span>FieldStamp</span><a href="./privacy.html">Privacy</a><a href="mailto:support@fieldstamp.app">support@fieldstamp.app</a>
   </footer>
 
 </main>
+</div>
 </body>
 </html>

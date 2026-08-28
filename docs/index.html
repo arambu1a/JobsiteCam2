@@ -4,45 +4,98 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FieldStamp</title>
+<meta name="description" content="Jobsite photos, stamped with the details that matter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #ffffff; --fg: #1a1a1a; --muted: #5c5c5c;
-    --rule: #e4e4e4; --accent: #1d4ed8; --card: #f7f7f8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14151a; --fg: #e8e8ea; --muted: #a0a0a8;
-      --rule: #2c2d34; --accent: #7aa2f7; --card: #1c1d24;
-    }
+    --color-bg: #0d0d10;
+    --color-text: #f4f3f7;
+    --color-neutral-300: #cbc9d4;
+    --color-neutral-400: #9d9baa;
+    --color-neutral-500: #76747f;
+    --color-neutral-800: #26252d;
+    --color-neutral-900: #16161b;
+    --color-accent: #9184d9;
+    --color-accent-200: #cfc9f2;
+    --color-accent-300: #ab9fe6;
+    --radius-md: 12px;
+    --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; padding: 4rem 1.25rem 5rem;
-    background: var(--bg); color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; background: var(--color-bg); color: var(--color-text);
+    font-family: var(--font-body); -webkit-text-size-adjust: 100%;
   }
-  main { max-width: 36rem; margin: 0 auto; }
-  h1 { font-size: 2.1rem; margin: 0 0 .5rem; letter-spacing: -.025em; }
-  .tagline { color: var(--muted); font-size: 1.1rem; margin: 0 0 2.5rem; }
-  ul { list-style: none; padding: 0; margin: 0; }
-  li { border-top: 1px solid var(--rule); }
-  li:last-child { border-bottom: 1px solid var(--rule); }
-  li a {
-    display: block; padding: 1.1rem .25rem;
-    color: var(--accent); text-decoration: none; font-weight: 550;
+  a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid rgba(145,132,217,.35); }
+  a:hover { color: var(--color-accent-200); }
+
+  .page { min-height: 100vh; padding: 0 32px 120px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 28px 0; border-bottom: 1px solid var(--color-neutral-800);
   }
-  li a:hover { text-decoration: underline; }
-  li span { display: block; color: var(--muted); font-weight: 400; font-size: .92rem; margin-top: .15rem; }
+  .brand { display: flex; align-items: center; gap: 12px; font: 500 17px/1 var(--font-heading); letter-spacing: -.01em; }
+  .brand .bar { width: 26px; height: 3px; background: var(--color-accent); }
+  .site-nav { display: flex; gap: 22px; font-size: 14px; }
+  .site-nav a { color: var(--color-neutral-400); border-bottom-color: transparent; }
+  .site-nav a:hover { color: var(--color-text); }
+
+  main { padding-top: 96px; }
+  h1 { margin: 0; font: 500 44px/1.12 var(--font-heading); letter-spacing: -.02em; }
+  .tagline { margin: 20px 0 0; max-width: 520px; font: 400 17px/1.62 var(--font-body); color: var(--color-neutral-400); text-wrap: pretty; }
+
+  .links { list-style: none; padding: 0; margin: 56px 0 0; }
+  .links li { border-top: 1px solid var(--color-neutral-800); }
+  .links li:last-child { border-bottom: 1px solid var(--color-neutral-800); }
+  .links a {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+    padding: 24px 2px; border-bottom: none; color: var(--color-text);
+    font: 500 20px/1.3 var(--font-heading); letter-spacing: -.01em;
+  }
+  .links a:hover { color: var(--color-accent-200); }
+  .links span { font: 400 15px/1.5 var(--font-body); color: var(--color-neutral-500); text-align: right; }
+
+  footer { margin-top: 64px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-neutral-500); }
+
+  @media (max-width: 760px) {
+    .page { padding: 0 20px 80px; }
+    main { padding-top: 56px; }
+    h1 { font-size: 32px; }
+    .links { margin-top: 40px; }
+    .links a { flex-direction: column; gap: 6px; padding: 20px 2px; }
+    .links span { text-align: left; }
+  }
 </style>
 </head>
 <body>
-<main>
+<div class="page">
+
+<header class="site-head wrap">
+  <span class="brand"><span class="bar"></span><span>FieldStamp</span></span>
+  <nav class="site-nav">
+    <a href="./support.html">Support</a>
+    <a href="./privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<main class="wrap">
   <h1>FieldStamp</h1>
-  <p class="tagline">Jobsite photos, stamped with the details that matter.</p>
-  <ul>
+  <p class="tagline">Jobsite photos, stamped with the details that matter — date, address, PM number, and crew, burned into the image itself.</p>
+
+  <ul class="links">
     <li><a href="./support.html">Support<span>How the app works, and how to get help</span></a></li>
     <li><a href="./privacy.html">Privacy Policy<span>FieldStamp collects no data</span></a></li>
   </ul>
+
+  <footer>
+    <span>FieldStamp</span><a href="mailto:support@fieldstamp.app">support@fieldstamp.app</a>
+  </footer>
 </main>
+</div>
 </body>
 </html>
