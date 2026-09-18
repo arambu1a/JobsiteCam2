@@ -5,21 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — FieldStamp</title>
 <meta name="description" content="FieldStamp collects no data. Everything the app does happens on your device.">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="./favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
+<meta name="theme-color" content="#f2643f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --color-bg: #0d0d10;
-    --color-text: #f4f3f7;
-    --color-neutral-300: #cbc9d4;
-    --color-neutral-400: #9d9baa;
-    --color-neutral-500: #76747f;
-    --color-neutral-800: #26252d;
-    --color-neutral-900: #16161b;
-    --color-accent: #9184d9;
-    --color-accent-200: #cfc9f2;
-    --color-accent-300: #ab9fe6;
+    --color-bg: #fbf8f4;
+    --color-surface: #f3eee7;
+    --color-border: #e7e1d8;
+    --color-text: #2b2926;
+    --color-muted: #5e5953;
+    --color-subtle: #6f6a63;
+    --color-mint: #a8d5c4;
+    --color-mint-100: #dcefe7;
+    --color-mint-700: #2e6e59;
+    --color-mint-800: #1f5242;
+    --color-coral: #f2643f;
+    --color-coral-600: #e85d3d;
+    --color-disabled-bg: #ede8e1;
+    --color-disabled-text: #8f8981;
     --radius-md: 12px;
     --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,57 +40,59 @@
     margin: 0; background: var(--color-bg); color: var(--color-text);
     font-family: var(--font-body); -webkit-text-size-adjust: 100%;
   }
-  a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid rgba(145,132,217,.35); }
-  a:hover { color: var(--color-accent-200); }
+  a { color: var(--color-mint-700); text-decoration: none; border-bottom: 1px solid var(--color-mint); }
+  a:hover { color: var(--color-mint-800); background: var(--color-mint-100); }
+  a:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; border-radius: 2px; }
 
   .page { min-height: 100vh; padding: 0 32px 120px; }
   .wrap { max-width: 720px; margin: 0 auto; }
 
   .site-head {
     display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    padding: 28px 0; border-bottom: 1px solid var(--color-neutral-800);
+    padding: 28px 0; border-bottom: 1px solid var(--color-border);
   }
   .brand { display: flex; align-items: center; gap: 12px; font: 500 17px/1 var(--font-heading); letter-spacing: -.01em; }
-  .brand .bar { width: 26px; height: 3px; background: var(--color-accent); }
+  .brand .bar { width: 26px; height: 3px; background: var(--color-coral-600); }
   .brand a { color: var(--color-text); border-bottom-color: transparent; }
   .site-nav { display: flex; gap: 22px; font-size: 14px; }
-  .site-nav a { color: var(--color-neutral-400); border-bottom-color: transparent; }
+  .site-nav a { color: var(--color-subtle); border-bottom-color: transparent; }
+  .site-nav a:hover, .brand a:hover { background: transparent; }
   .site-nav a:hover, .site-nav a.is-active { color: var(--color-text); }
 
   main { padding-top: 64px; }
   h1 { margin: 0; font: 500 40px/1.14 var(--font-heading); letter-spacing: -.02em; }
-  .meta { margin: 16px 0 0; font: 400 14px/1.5 var(--font-body); color: var(--color-neutral-500); }
+  .meta { margin: 16px 0 0; font: 400 14px/1.5 var(--font-body); color: var(--color-subtle); }
 
   .lede { margin-top: 40px; display: flex; flex-direction: column; gap: 18px;
-          font: 400 17px/1.68 var(--font-body); color: var(--color-neutral-300); }
+          font: 400 17px/1.68 var(--font-body); color: var(--color-muted); }
   .lede p { margin: 0; text-wrap: pretty; }
 
   .toc {
-    margin-top: 52px; padding: 28px 30px; background: var(--color-neutral-900);
-    border: 1px solid var(--color-neutral-800); border-radius: var(--radius-md);
+    margin-top: 52px; padding: 28px 30px; background: var(--color-surface);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
   }
   .toc-title {
     margin: 0 0 18px; font: 500 12px/1 var(--font-body); letter-spacing: .18em;
-    text-transform: uppercase; color: var(--color-neutral-400);
+    text-transform: uppercase; color: var(--color-muted);
   }
   .toc ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; font: 400 16px/1.4 var(--font-body); }
   .toc li { display: flex; gap: 12px; }
-  .toc .num { color: var(--color-neutral-500); min-width: 24px; }
+  .toc .num { color: var(--color-subtle); min-width: 24px; }
   .toc a { border-bottom-color: transparent; }
-  .toc a:hover { border-bottom-color: rgba(145,132,217,.35); }
+  .toc a:hover { border-bottom-color: var(--color-mint); }
 
   .doc {
     margin-top: 52px; padding-top: 34px;
-    border-top: 1px solid var(--color-neutral-800); scroll-margin-top: 24px;
+    border-top: 1px solid var(--color-border); scroll-margin-top: 24px;
   }
   .doc:first-of-type { margin-top: 64px; }
-  .doc.last { border-bottom: 1px solid var(--color-neutral-800); padding-bottom: 34px; }
+  .doc.last { border-bottom: 1px solid var(--color-border); padding-bottom: 34px; }
   .doc h2 { margin: 0 0 16px; font: 500 24px/1.28 var(--font-heading); letter-spacing: -.01em; }
-  .prose { display: flex; flex-direction: column; gap: 16px; font: 400 16px/1.72 var(--font-body); color: var(--color-neutral-400); }
+  .prose { display: flex; flex-direction: column; gap: 16px; font: 400 16px/1.72 var(--font-body); color: var(--color-muted); }
   .prose p { margin: 0; text-wrap: pretty; }
   .prose ul { margin: 0; padding-left: 22px; display: grid; gap: 9px; }
 
-  footer { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-neutral-500); }
+  footer { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-subtle); }
 
   @media (max-width: 760px) {
     .page { padding: 0 20px 80px; }

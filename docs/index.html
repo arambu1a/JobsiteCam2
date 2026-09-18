@@ -5,21 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FieldStamp</title>
 <meta name="description" content="Jobsite photos, stamped with the details that matter.">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="./favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
+<meta name="theme-color" content="#f2643f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --color-bg: #0d0d10;
-    --color-text: #f4f3f7;
-    --color-neutral-300: #cbc9d4;
-    --color-neutral-400: #9d9baa;
-    --color-neutral-500: #76747f;
-    --color-neutral-800: #26252d;
-    --color-neutral-900: #16161b;
-    --color-accent: #9184d9;
-    --color-accent-200: #cfc9f2;
-    --color-accent-300: #ab9fe6;
+    --color-bg: #fbf8f4;
+    --color-surface: #f3eee7;
+    --color-border: #e7e1d8;
+    --color-text: #2b2926;
+    --color-muted: #5e5953;
+    --color-subtle: #6f6a63;
+    --color-mint: #a8d5c4;
+    --color-mint-100: #dcefe7;
+    --color-mint-700: #2e6e59;
+    --color-mint-800: #1f5242;
+    --color-coral: #f2643f;
+    --color-coral-600: #e85d3d;
+    --color-disabled-bg: #ede8e1;
+    --color-disabled-text: #8f8981;
     --radius-md: 12px;
     --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,42 +40,60 @@
     margin: 0; background: var(--color-bg); color: var(--color-text);
     font-family: var(--font-body); -webkit-text-size-adjust: 100%;
   }
-  a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid rgba(145,132,217,.35); }
-  a:hover { color: var(--color-accent-200); }
+  a { color: var(--color-mint-700); text-decoration: none; border-bottom: 1px solid var(--color-mint); }
+  a:hover { color: var(--color-mint-800); background: var(--color-mint-100); }
+  a:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; border-radius: 2px; }
 
-  .page { min-height: 100vh; padding: 0 32px 120px; }
+  .page { padding: 0 32px 120px; }
   .wrap { max-width: 720px; margin: 0 auto; }
 
   .site-head {
     display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    padding: 28px 0; border-bottom: 1px solid var(--color-neutral-800);
+    padding: 28px 0; border-bottom: 1px solid var(--color-border);
   }
   .brand { display: flex; align-items: center; gap: 12px; font: 500 17px/1 var(--font-heading); letter-spacing: -.01em; }
-  .brand .bar { width: 26px; height: 3px; background: var(--color-accent); }
+  .brand .bar { width: 26px; height: 3px; background: var(--color-coral-600); }
   .site-nav { display: flex; gap: 22px; font-size: 14px; }
-  .site-nav a { color: var(--color-neutral-400); border-bottom-color: transparent; }
+  .site-nav a { color: var(--color-subtle); border-bottom-color: transparent; }
+  .site-nav a:hover, .brand a:hover { background: transparent; }
   .site-nav a:hover { color: var(--color-text); }
 
-  main { padding-top: 96px; }
+  /* Coral hero: charcoal on #f2643f is 4.6:1, so every colour in here is charcoal. */
+  .hero { background: var(--color-coral); color: var(--color-text); padding: 0 32px 88px; }
+  .hero .site-head { border-bottom-color: rgba(43,41,38,.22); }
+  .hero .brand .bar { background: var(--color-text); }
+  .hero .site-nav a { color: var(--color-text); }
+  .hero .site-nav a:hover { border-bottom-color: var(--color-text); }
+  .hero-body { padding-top: 88px; }
   h1 { margin: 0; font: 500 44px/1.12 var(--font-heading); letter-spacing: -.02em; }
-  .tagline { margin: 20px 0 0; max-width: 520px; font: 400 17px/1.62 var(--font-body); color: var(--color-neutral-400); text-wrap: pretty; }
+  .tagline { margin: 20px 0 0; max-width: 520px; font: 400 17px/1.62 var(--font-body); text-wrap: pretty; }
+  .btn {
+    display: inline-flex; align-items: center; margin-top: 32px; padding: 12px 22px;
+    border-radius: 999px; border: 1.5px solid var(--color-text);
+    background: var(--color-mint); color: var(--color-text); font: 500 15px/1 var(--font-body);
+    transition: background .15s ease;
+  }
+  .btn:hover { background: var(--color-mint-100); color: var(--color-text); }
+  .btn:focus-visible { border-radius: 999px; }
 
+  main { padding-top: 16px; }
   .links { list-style: none; padding: 0; margin: 56px 0 0; }
-  .links li { border-top: 1px solid var(--color-neutral-800); }
-  .links li:last-child { border-bottom: 1px solid var(--color-neutral-800); }
+  .links li { border-top: 1px solid var(--color-border); }
+  .links li:last-child { border-bottom: 1px solid var(--color-border); }
   .links a {
     display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
     padding: 24px 2px; border-bottom: none; color: var(--color-text);
     font: 500 20px/1.3 var(--font-heading); letter-spacing: -.01em;
   }
-  .links a:hover { color: var(--color-accent-200); }
-  .links span { font: 400 15px/1.5 var(--font-body); color: var(--color-neutral-500); text-align: right; }
+  .links a:hover { color: var(--color-mint-800); background: transparent; }
+  .links span { font: 400 15px/1.5 var(--font-body); color: var(--color-subtle); text-align: right; }
 
-  footer { margin-top: 64px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-neutral-500); }
+  footer { margin-top: 64px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; color: var(--color-subtle); }
 
   @media (max-width: 760px) {
     .page { padding: 0 20px 80px; }
-    main { padding-top: 56px; }
+    .hero { padding: 0 20px 56px; }
+    .hero-body { padding-top: 56px; }
     h1 { font-size: 32px; }
     .links { margin-top: 40px; }
     .links a { flex-direction: column; gap: 6px; padding: 20px 2px; }
@@ -73,20 +102,24 @@
 </style>
 </head>
 <body>
+<div class="hero">
+  <header class="site-head wrap">
+    <span class="brand"><span class="bar"></span><span>FieldStamp</span></span>
+    <nav class="site-nav">
+      <a href="./support">Support</a>
+      <a href="./privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <div class="hero-body wrap">
+    <h1>FieldStamp</h1>
+    <p class="tagline">Jobsite photos, stamped with the details that matter — date, address, PM number, and crew, burned into the image itself.</p>
+    <a class="btn" href="./support">Get support</a>
+  </div>
+</div>
+
 <div class="page">
-
-<header class="site-head wrap">
-  <span class="brand"><span class="bar"></span><span>FieldStamp</span></span>
-  <nav class="site-nav">
-    <a href="./support">Support</a>
-    <a href="./privacy">Privacy</a>
-  </nav>
-</header>
-
 <main class="wrap">
-  <h1>FieldStamp</h1>
-  <p class="tagline">Jobsite photos, stamped with the details that matter — date, address, PM number, and crew, burned into the image itself.</p>
-
   <ul class="links">
     <li><a href="./support">Support<span>How the app works, and how to get help</span></a></li>
     <li><a href="./privacy">Privacy Policy<span>FieldStamp collects no data</span></a></li>
